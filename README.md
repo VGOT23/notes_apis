@@ -1,15 +1,17 @@
 # YT Backend
 
-A simple Express.js backend API for managing notes.
+A simple Express.js backend API for managing notes with MongoDB.
 
 ## Description
 
-This is a lightweight backend application that provides RESTful API endpoints for creating, reading, updating, and deleting notes.
+This is a lightweight backend application that provides RESTful API endpoints for creating, reading, updating, and deleting notes using MongoDB for data persistence.
 
 ## Tech Stack
 
 - **Runtime**: Node.js
 - **Framework**: Express.js
+- **Database**: MongoDB
+- **ODM**: Mongoose
 
 ## Installation
 
@@ -20,13 +22,19 @@ This is a lightweight backend application that provides RESTful API endpoints fo
 npm install
 ```
 
+3. Create a `.env` file in the root directory with the following:
+
+```env
+MONGO_DATABASE_URL=your_mongodb_connection_string
+```
+
 ## Running the Server
 
 ```bash
 node server.js
 ```
 
-The server will start on port 3000.
+The server will start on port 3000 and connect to MongoDB.
 
 ## API Endpoints
 
@@ -36,13 +44,13 @@ The server will start on port 3000.
   ```json
   {
     "title": "Note Title",
-    "detail": "Note content"
+    "description": "Note content"
   }
   ```
 - **Response**:
   ```json
   {
-    "message": "notes created successfully"
+    "message": "Note created successfully"
   }
   ```
 
@@ -51,34 +59,35 @@ The server will start on port 3000.
 - **Response**:
   ```json
   {
-    "message": "notes data feteched successfully",
-    "notes": [
+    "message": "Notes data fetched Successfully",
+    "data": [
       {
+        "_id": "note_id",
         "title": "Note Title",
-        "detail": "Note content"
+        "description": "Note content",
+        "__v": 0
       }
     ]
   }
   ```
 
 ### Update a Note
-- **Endpoint**: `PATCH /notes/:index`
+- **Endpoint**: `PATCH /notes/:id`
 - **Body**:
   ```json
   {
-    "title": "Updated Title",
-    "des": "Updated content"
+    "description": "Updated content"
   }
   ```
 - **Response**:
   ```json
   {
-    "message": "Notes updated successfully"
+    "message": "note updated successfully"
   }
   ```
 
 ### Delete a Note
-- **Endpoint**: `DELETE /notes/:index`
+- **Endpoint**: `DELETE /notes/:id`
 - **Response**:
   ```json
   {
@@ -90,12 +99,24 @@ The server will start on port 3000.
 
 ```
 YT_backend/
+├── .env
+├── .gitignore
 ├── package.json
 ├── package-lock.json
 ├── server.js
 └── src/
-    └── app.js
+    ├── app.js
+    ├── db/
+    │   └── db.js
+    └── models/
+        └── note.model.js
 ```
+
+## Dependencies
+
+- express
+- mongoose
+- dotenv
 
 ## License
 
